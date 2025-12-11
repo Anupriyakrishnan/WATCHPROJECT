@@ -1,0 +1,154 @@
+
+        body {
+            background-color: #ffffff; /* From coupon */
+            color: #000000; /* From coupon */
+            font-family: Arial, sans-serif; /* Retain from original user code */
+            overflow: hidden;
+        }
+       
+        .main-content {
+            /* margin-left: 20px;  */
+            padding: 20px;
+            background-color: #ffffff; /* From coupon */
+        }
+        .main-header {
+            margin-bottom: 20px;
+        }
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            background-color: #edf4f5; /* From coupon table-container */
+        }
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #ced4da; /* From coupon form-control border */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000000; /* From coupon */
+            font-size: 14px; /* From coupon table td */
+        }
+        .btn-unblock {
+            background-color: #2ecc71; /* From coupon btn-list */
+            border: none; /* From coupon */
+            color: #ffffff; /* From coupon */
+            font-size: 12px; /* From coupon btn-list */
+            padding: 5px 15px; /* From coupon btn-list */
+            border-radius: 5px; /* From coupon btn-list */
+            width: 100px;
+        }
+        .btn-block {
+            background-color: #dc3545; /* From coupon btn-unlist */
+            border: none; /* From coupon */
+            color: #ffffff; /* From coupon */
+            font-size: 12px; /* From coupon btn-unlist */
+            padding: 5px 15px; /* From coupon btn-unlist */
+            border-radius: 5px; /* From coupon btn-unlist */
+            width: 100px;
+        }
+        .btn-block {
+    background-color: #dc3545 !important;
+    color: #ffffff !important;
+}
+
+.btn-unblock {
+    background-color: #2ecc71 !important;
+    color: #ffffff !important;
+}
+
+        .search-container {
+            position: relative;
+            max-width: 300px;
+        }
+        .search-container i {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #adb5bd; /* Retain original */
+        }
+        .search-input {
+            padding-left: 35px;
+            border-radius: 5px; /* From coupon search-bar */
+            border: 1px solid #ced4da; /* From coupon form-control */
+            background-color: #ffffff; /* From coupon search-bar */
+            color: #000000; /* From coupon search-bar */
+            font-size: 14px; /* From coupon table td */
+        }
+        .bottom-pagination {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        .admin-profile {
+            display: flex;
+            align-items: center;
+        }
+        .admin-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #ced4da; /* From coupon form-control border */
+            margin-right: 8px;
+        }
+        .table {
+            background-color: #eef5f6; /* From coupon table */
+            color: #000000; /* From coupon table */
+        }
+        .table th {
+            background-color: #d1e7e9; /* From coupon table th */
+            color: #000000; /* From coupon table th */
+            text-transform: uppercase; /* From coupon table th */
+            font-size: 12px; /* From coupon table th */
+            border: none; /* From coupon table th */
+        }
+        .table td {
+            background-color: #fbfdfd; /* From coupon table td */
+            color: #000000; /* From coupon table td */
+            border: none; /* From coupon table td */
+            font-size: 14px; /* From coupon table td */
+        }
+        .table tr {
+            border-bottom: 1px solid #f5f8fa; /* From coupon table tr */
+        }
+        .btn-primary {
+            background-color: #3498db; /* From coupon btn-edit */
+            border: none; /* From coupon */
+            color: #ffffff; /* From coupon */
+            font-size: 12px; /* From coupon btn-edit */
+            padding: 5px 15px; /* From coupon btn-edit */
+            border-radius: 5px; /* From coupon btn-edit */
+        }
+        .btn-secondary {
+            background-color: #7f8c8d; /* From coupon btn-clear */
+            border: none; /* From coupon */
+            color: #ffffff; /* From coupon */
+            font-size: 12px; /* From coupon btn-clear */
+            padding: 5px 15px; /* From coupon btn-clear */
+            border-radius: 5px; /* From coupon btn-clear */
+        }
+        .pagination .page-item .page-link {
+            color: #3498db; /* From coupon btn-edit */
+            border-color: #ced4da; /* From coupon form-control */
+            font-size: 14px; /* From coupon table td */
+            border-radius: 5px; /* From coupon btn-edit */
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #3498db; /* From coupon btn-edit */
+            border-color: #3498db; /* From coupon btn-edit */
+            color: #ffffff; /* From coupon */
+        }
+        .pagination .page-link:hover {
+            background-color: #e9ecef; /* Slightly darker than #ffffff */
+            color: #3498db; /* From coupon btn-edit */
+            border-color: #ced4da; /* From coupon form-control */
+        }
+        .pagination .page-link:focus {
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25); /* Based on #3498db */
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }

@@ -12,6 +12,17 @@ router.get("/",adminAuth,adminController.loadDashboard)
 router.get('/logout',adminController.logout)
 
 //costumer router
-router.get("/user",adminAuth,userController.customerInfo)
+router.get("/users", adminAuth, userController.customerInfo);
+router.patch(
+  "/blockCustomer/:id",
+  adminAuth,
+  userController.customerBlocked
+);
+router.patch(
+  "/unblockCustomer/:id",
+  adminAuth,
+  userController.customerunBlocked
+);
+
 
 module.exports = router;
