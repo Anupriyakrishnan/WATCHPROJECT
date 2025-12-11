@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/customers.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <%-include("../partials/admin/header")%>
+           
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="row main-header">
+                    <div class="col-md-6">
+                        <h2>Users</h2>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <form class="search-container me-4" method="GET" action="/admin/users" id="searchForm">
+                                <div style="display:flex; justify-content: space-around;">
+                                    <input 
+                                        type="text" 
+                                        name="search"  
+                                        class="form-control search-input" 
+                                        placeholder="Search" 
+                                        value="<%= search %>" 
+                                        id="searchInput"
+                                    >
+                            
+                                    <button type="submit" class="btn btn-primary ms-2">Search</button>
+                            
+                                    <!-- Add type="button" so it doesn't submit the form -->
+                                    <button type="button" class="btn btn-secondary ms-2" id="clearBtn">Clear</button> 
+                                </div>
+                            </form>
+                            
+                            <script>
+                              // Clear input field on button click
+                              document.getElementById("clearBtn").addEventListener("click", function () {
+                                document.getElementById("searchInput").value = "";
+                                document.getElementById("searchForm").submit(); // Optional: auto-submit form after clearing
+                              });
+                            </script>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body p-0">
+                        <table class="table table-hover ">
+                            <thead >
+                                <tr>
+                                    <th style="width: 30%">Name</th>
+                                    <th style="width: 40%">Email</th>
+                                    <th style="width: 15%">Phone No</th>
+                                    <th style="width: 10%" class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%for(let i=0;i<data.length;i++){%>
+                                    <tr>
+                                        <td><%=data[i].name%></td>
+                                        <td><%=data[i].email%></td>
+                                        <td><%=data[i].phone%></td>
+                                        <td class="ps-1">
+                                            <%if(data[i].isBlocked===false){%>
+                                              <button class=" btn-block" 
+                                                      onclick="confirmBlock('<%=data[i]._id%>', true, this)">BLOCK</button>
+                                            <%}else{%>
+                                              <button class=" btn-unblock" 
+                                                      onclick="confirmBlock('<%=data[i]._id%>', false, this)">UNBLOCK</button>
+                                            <%}%>
+                                        </td>
+                                    </tr>
+                                <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+           <!-- Pagination -->
+<nav aria-label="Page navigation" class="pt-4">
+    <ul class="pagination justify-content-center">
+      <% if (currentPage> 1) { %>
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="?page=<%= currentPage - 1 %>"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">«</span>
+        </a>
+      </li>
+      <% } %> <% for(let i=1; i <=totalPages; i++) { %> <%
+      if(i===currentPage) { %>
+      <li class="page-item active">
+        <a class="page-link" href="?page=<%= i %>"> <%= i %> </a>
+      </li>
+      <% } else { %>
+      <li class="page-item">
+        <a class="page-link" href="?page=<%= i %>"> <%= i %> </a>
+      </li>
+      <% } %> <% } %> <% if(currentPage < totalPages) { %>
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="?page=<%= currentPage + 1 %>"
+          aria-label="Next"
+        >
+          <span aria-hidden="true">»</span>
+        </a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+
+            </div>
+        </div>
+    </div>
+   
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        async function confirmBlock(userId, isBlocking, buttonElement) {
+          const action = isBlocking ? 'block' : 'unblock';
+          const actionTitle = isBlocking ? 'Block' : 'Unblock';
+          const actionColor = isBlocking ? '#dc3545' : '#28a745';
+          
+          const { isConfirmed } = await Swal.fire({
+            title: `Are you sure?`,
+            text: `You are about to ${action} this customer`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: actionColor,
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: `Yes, ${action} it!`,
+            cancelButtonText: 'Cancel'
+          });
+        
+          if (isConfirmed) {
+            try {
+              $(buttonElement).prop('disabled', true).html(
+                `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...`
+              );
+              const response = await fetch(`/admin/${action}Customer/${userId}`, {
+                method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
+              const data = await response.json();
+              
+              if (data.success) {
+                await Swal.fire({
+                  title: 'Success!',
+                  text: `Customer has been ${action}ed successfully`,
+                  icon: 'success',
+                  confirmButtonColor: actionColor
+                });
+                window.location.reload();
+              } else {
+                throw new Error(data.message || `Failed to ${action} customer`);
+              }
+            } catch (error) {
+              console.error('Error:', error);
+              await Swal.fire({
+                title: 'Error!',
+                text: error.message || `Failed to ${action} customer`,
+                icon: 'error'
+              });
+              $(buttonElement).prop('disabled', false).text(
+                isBlocking ? 'BLOCK' : 'UNBLOCK'
+              );
+            }
+          }
+        }
+        </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
