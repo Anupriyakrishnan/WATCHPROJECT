@@ -1,0 +1,260 @@
+
+        :root {
+            --primary-color: #8da7ab;
+            --sidebar-color: #b0d5de;
+            --hover-color: #6e7e6e;
+            --text-dark: #310505;
+            --dropdown-bg: #bb9aaf;
+            --dropdown-hover: #33053d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styles */
+        .navbar-aside {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 260px;
+            background-color: var(--sidebar-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .navbar-aside.minimized {
+            width: 80px;
+        }
+
+        .aside-top {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .brand-wrap {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .brand-wrap .logo {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .btn-aside-minimize {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-aside {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            margin: 5px 0;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-link:hover,
+        .menu-link.active {
+            background-color: var(--hover-color);
+            color: #ffffff;
+            border-left-color: #ffffff;
+        }
+
+        .menu-link .icon {
+            font-size: 24px;
+            margin-right: 15px;
+            min-width: 24px;
+        }
+
+        .navbar-aside.minimized .menu-link .text {
+            display: none;
+        }
+
+        /* Main Content */
+        .main-wrap {
+            margin-left: 260px;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        .main-wrap.expanded {
+            margin-left: 80px;
+        }
+
+        /* Header */
+        .main-header {
+            background-color: var(--primary-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .btn-mobile {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .col-nav .nav {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .img-xs {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+
+        .rounded-circle {
+            border-radius: 50%;
+        }
+
+        .dropdown-menu {
+            background-color: var(--dropdown-bg);
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .dropdown-item {
+            color: var(--text-dark);
+            padding: 10px 20px;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--dropdown-hover);
+            color: #ffffff;
+        }
+
+        /* Content Area */
+        .content-main {
+            padding: 30px;
+        }
+
+        .content-header {
+            margin-bottom: 30px;
+        }
+
+        .content-header h2 {
+            color: var(--text-dark);
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        /* Screen Overlay for Mobile */
+        .screen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .screen-overlay.show {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            .navbar-aside {
+                left: -260px;
+            }
+
+            .navbar-aside.show {
+                left: 0;
+            }
+
+            .main-wrap {
+                margin-left: 0;
+            }
+
+            .btn-mobile {
+                display: block;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content-main {
+                padding: 15px;
+            }
+
+            .content-header h2 {
+                font-size: 24px;
+            }
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+            border-color: var(--hover-color);
+        }
+    

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Male_Fashion Template" />
+    <meta name="keywords" content="Male_Fashion, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TimeLuxe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css" />
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css" />
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .header__nav__option .sign-in-link {
+        font-size: 16px;
+        color: #333;
+        margin-right: 15px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .header__nav__option .sign-in-link:hover {
+        color: #ff7f50;
+      }
+      .signup-section {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .signup-form,
+      .signup-image {
+        flex: 1;
+        padding: 10px;
+      }
+      .signup-form {
+        max-width: 50%;
+      }
+      .signup-image {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 40%;
+      }
+      .signup-image img {
+        max-width: 100%;
+        height: auto;
+      }
+      .social-btns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .social-btns button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+      .spacer {
+        height: 30px; /* Adjust the height as needed */
+      }
+      .form-group label {
+        font-size: 0.875rem; /* Decrease label size */
+      }
+      .form-control {
+        font-size: 0.875rem; /* Decrease input text size */
+        padding: 0.5rem; /* Decrease padding */
+      }
+      .btn-primary {
+        padding: 0.5rem 1rem; /* Decrease button padding */
+        font-size: 0.875rem; /* Decrease button text size */
+      }
+      .card-title {
+        font-size: 1.25rem; /* Decrease card title size */
+      }
+      .signup-image .sign-in-link {
+        color: #333;
+        text-decoration: none;
+      }
+      .signup-image .sign-in-link:hover {
+        color: #ff7f50;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5 mb-1">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-body signup-section">
+              <div class="signup-form">
+                <h1 class="card-title text-center">Sign Up</h1>
+
+                <form id="myForm" action="/signup" method="POST">
+                  <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      placeholder="Enter Name"
+                    />
+                    <small id="nameError" style="color: red"></small>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      placeholder="Enter email"
+                    />
+                    <small id="emailError" style="color: red"></small>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="phone"
+                      placeholder="Enter phone number"
+                    />
+                    <small id="phoneError" style="color: red"></small>
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="password"
+                      placeholder="Password"
+                    />
+                    <small id="passwordError" style="color: red"></small>
+                  </div>
+                  <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="confirm-password"
+                      placeholder="Confirm Password"
+                    />
+                    <small
+                      id="confirm-passwordError"
+                      style="color: red"
+                    ></small>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <button type="submit" class="btn btn-primary">
+                      Sign Up
+                    </button>
+                    <div class="mt-2px">
+                      <p>or sign up with</p>
+                    </div>
+                    <div class="social-btns">
+                      <a href="/auth/google/" class="btn btn-outline-danger">
+                        <img
+                          src="img/google.jpg"
+                          alt="Google Logo"
+                          style="width: 24px; height: 24px"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="signup-image">
+                <a href="/">
+                  <img src="img/signup1.jpg" alt="Shopping Site" />
+                </a>
+                <div class="text-center mt-2">
+                  <a href="login" class="sign-in-link"
+                    >Already registered? Log in</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <%- include("../../views/partials/user/footer") %>
+
+    <script>
+  document.getElementById("myForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    document.getElementById("nameError").innerText = "";
+    document.getElementById("emailError").innerText = "";
+    document.getElementById("phoneError").innerText = "";
+    document.getElementById("passwordError").innerText = "";
+    document.getElementById("confirm-passwordError").innerText = "";
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirm-password").value.trim();
+
+    let isValid = true;
+
+    if (name === "") {
+      document.getElementById("nameError").innerText = "Name is required";
+      isValid = false;
+    }
+
+    if (email === "") {
+      document.getElementById("emailError").innerText = "Email is required";
+      isValid = false;
+    } else if (!email.includes("@") || !email.includes(".")) {
+      document.getElementById("emailError").innerText = "Enter a valid email";
+      isValid = false;
+    }
+
+    if(phone === ""){
+      document.getElementById("phoneError").innerText = "Phone number is required";
+      isValid = false;
+    }else if (!phone.length === 10){
+      document.getElementById("phoneError").innerText = "Enter a valid 10-digit phone number";
+      isValid = false;
+    }
+
+    if(password === ""){
+      document.getElementById("passwordError").innerText = "password is required";
+      isValid = false;
+    }
+     else if (password.length < 6) {
+      document.getElementById("passwordError").innerText =
+        "Password must be at least 6 characters";
+      isValid = false;
+    } else if (!/[0-9]/.test(password)) {
+      document.getElementById("passwordError").innerText =
+        "Password must contain at least one number";
+      isValid = false;
+    } else if (!/[A-Z]/.test(password)) {
+      document.getElementById("passwordError").innerText =
+        "Password must contain an uppercase letter";
+      isValid = false;
+    } else if (!/[a-z]/.test(password)) {
+      document.getElementById("passwordError").innerText =
+        "Password must contain a lowercase letter";
+      isValid = false;
+    }
+
+    if (password !== confirmPassword) {
+      document.getElementById("confirm-passwordError").innerText =
+        "Passwords do not match";
+      isValid = false;
+    }
+
+    if (!isValid) return;
+    
+
+    const res = await fetch("/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, phone, password, confirmPassword }),
+    });
+
+    const result = await res.json();
+
+if (result.status === "success") {
+  window.location.href = result.redirect; 
+} else {
+  alert("Signup failed");
+}
+
+    
+  });
+</script>
+
+  </body>
+</html>
