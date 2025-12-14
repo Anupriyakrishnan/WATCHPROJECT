@@ -3,6 +3,7 @@ const router = express.Router();
 const { userAuth, adminAuth } = require("../middlewares/auth");
 const adminController = require("../controller/admin/adminController")
 const userController = require("../controller/admin/userController")
+const categoryController = require("../controller/admin/categoryController")
 
 
 
@@ -23,6 +24,15 @@ router.patch(
   adminAuth,
   userController.customerunBlocked
 );
+
+//category router
+router.get("/category",categoryController.loadCategory)
+router.post("/add-category",categoryController.addCategory)
+router.put("/edit-category/:id", categoryController.editCategory);
+router.patch('/category/:id/status', categoryController.updateCategory);
+router.patch('/category/:id/delete',categoryController.deleteCategory)
+
+
 
 
 module.exports = router;
