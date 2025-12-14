@@ -15,9 +15,9 @@ const categorySchema = new mongoose.Schema({
         type:Boolean,
         default:true
     },
-    categoryOffer:{
-        type:Number,
-        default:0
+    isDeleted:{
+        type:Boolean,
+        default:false
     },
     createdAt:{
         type:Date,

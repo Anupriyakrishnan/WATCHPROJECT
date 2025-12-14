@@ -1,0 +1,216 @@
+
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-content {
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .main-header {
+            margin-bottom: 20px;
+        }
+
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            background-color: #edf4f5;
+        }
+
+        /* Status Badges */
+        .badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-active {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .badge-inactive {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Button Styles */
+        .btn-list {
+            background-color: #2ecc71;
+            border: none;
+            color: #ffffff;
+            font-size: 12px;
+            padding: 5px 15px;
+            border-radius: 5px;
+            width: 100px;
+            cursor: pointer;
+        }
+
+        .btn-list:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-unlist {
+            background-color: #e74c3c;
+            border: none;
+            color: #ffffff;
+            font-size: 12px;
+            padding: 5px 15px;
+            border-radius: 5px;
+            width: 100px;
+            cursor: pointer;
+        }
+
+        .btn-unlist:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-edit {
+            background-color: #3498db;
+            border: none;
+            color: #ffffff;
+            font-size: 12px;
+            padding: 5px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-edit:hover {
+            background-color: #2980b9;
+            color: #ffffff;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            border: none;
+            color: #ffffff;
+            font-size: 12px;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .btn-add {
+            background-color: #2ecc71;
+            border: none;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-add:hover {
+            background-color: #27ae60;
+            color: #ffffff;
+        }
+
+        /* Search Container */
+        .search-container {
+            position: relative;
+            max-width: 300px;
+        }
+
+        .search-input {
+            padding-left: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        /* Table Styles */
+        .table {
+            background-color: #eef5f6;
+            color: #000000;
+        }
+
+        .table th {
+            background-color: #d1e7e9;
+            color: #000000;
+            text-transform: uppercase;
+            font-size: 12px;
+            border: none;
+            padding: 15px;
+        }
+
+        .table td {
+            background-color: #fbfdfd;
+            color: #000000;
+            border: none;
+            font-size: 14px;
+            padding: 15px;
+            vertical-align: middle;
+        }
+
+        .table tr {
+            border-bottom: 1px solid #f5f8fa;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Primary & Secondary Buttons */
+        .btn-primary {
+            background-color: #3498db;
+            border: none;
+            color: #ffffff;
+            font-size: 12px;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: #7f8c8d;
+            border: none;
+            color: #ffffff;
+            font-size: 12px;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #6c7a7b;
+        }
+
+        /* Pagination */
+        .pagination .page-item .page-link {
+            color: #3498db;
+            border-color: #ced4da;
+            font-size: 14px;
+            border-radius: 5px;
+            margin: 0 3px;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #3498db;
+            border-color: #3498db;
+            color: #ffffff;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #e9ecef;
+            color: #3498db;
+            border-color: #ced4da;
+        }
+    
