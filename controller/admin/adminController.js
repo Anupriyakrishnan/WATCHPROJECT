@@ -1,15 +1,13 @@
-const User = require("../../models/userSchema")
-const mongoose = require("mongoose")
-const bcrypt = require("bcrypt")
+const User = require("../../models/userSchema");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-
-
-const loadLogin =async(req,res)=>{
-    if(req.session.admin){
-        return res.redirect("/admin/dashboard")
-    }
-    res.render("admin-login",{message:null})
-}
+const loadLogin = async (req, res) => {
+  if (req.session.admin) {
+    return res.redirect("/admin/dashboard");
+  }
+  res.render("admin-login", { message: null });
+};
 
 const login = async (req, res) => {
   try {
@@ -32,33 +30,32 @@ const login = async (req, res) => {
   }
 };
 
-const loadDashboard = async(req,res)=>{
- if(req.session.admin){
-  try {
-    res.render("Dashboard")
-  } catch (error) {
-    res.render("pageerror")
+const loadDashboard = async (req, res) => {
+  if (req.session.admin) {
+    try {
+      res.render("Dashboard");
+    } catch (error) {
+      res.render("pageerror");
+    }
   }
- }
-}
+};
 
-const logout = async(req,res)=>{
+const logout = async (req, res) => {
   try {
-    req.session.destroy((err)=>{
-      if(err){
-        return res.redirect("pageerror")
+    req.session.destroy((err) => {
+      if (err) {
+        return res.redirect("pageerror");
       }
-      return res.redirect("/admin/login")
-    })
+      return res.redirect("/admin/login");
+    });
   } catch (error) {
-    console.error("server error")
+    console.error("server error");
   }
-}
+};
 
-
-module.exports ={
-    loadLogin,
-    login,
-    loadDashboard,
-    logout,
-}
+module.exports = {
+  loadLogin,
+  login,
+  loadDashboard,
+  logout,
+};
