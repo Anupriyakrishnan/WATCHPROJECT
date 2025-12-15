@@ -1,30 +1,28 @@
-const Category = require("../../models/categorySchema")
+const Category = require("../../models/categorySchema");
 
-const loadCategory = async(req,res)=>{
-    let page = parseInt(req.query.page) || 1;
-    let limit =6
-    let search = req.query.search || "";
-    let query =  search
-        ?{ isDeleted:false , name:{ $regex:search,$options:"i"}}
-        :{isDeleted:false}
-     const totalcategory = await Category.countDocuments(query)
-     const categoryData = await Category.find(query)
-     .skip((page-1)*limit)
-     .limit(limit)
-     .sort({createdAt:-1})
-     
-     let totalpages = Math.ceil(totalcategory/limit)
+const loadCategory = async (req, res) => {
+  let page = parseInt(req.query.page) || 1;
+  let limit = 6;
+  let search = req.query.search || "";
+  let query = search
+    ? { isDeleted: false, name: { $regex: search, $options: "i" } }
+    : { isDeleted: false };
+  const totalcategory = await Category.countDocuments(query);
+  const categoryData = await Category.find(query)
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .sort({ createdAt: -1 });
 
-     res.render("category",{
-        cat:categoryData,
-        currentPage: page,
-      totalPages: totalpages,
-      totalCategories: totalcategory,
-      search,
+  let totalpages = Math.ceil(totalcategory / limit);
 
-     })
-    
-}
+  res.render("category", {
+    cat: categoryData,
+    currentPage: page,
+    totalPages: totalpages,
+    totalCategories: totalcategory,
+    search,
+  });
+};
 
 const addCategory = async (req, res) => {
   try {
@@ -36,7 +34,7 @@ const addCategory = async (req, res) => {
     }
 
     const existing = await Category.findOne({
-      name: { $regex: new RegExp("^" + name + "$", "i") }
+      name: { $regex: new RegExp("^" + name + "$", "i") },
     });
 
     if (existing) {
@@ -52,14 +50,13 @@ const addCategory = async (req, res) => {
 
     req.session.message = "Category added successfully";
     return res.redirect("/admin/category");
-
   } catch (error) {
     console.log("Error:", error);
     req.session.message = "Server error!";
     return res.redirect("/admin/category");
   }
 };
- 
+
 const editCategory = async (req, res) => {
   try {
     const id = req.params.id;
@@ -67,11 +64,10 @@ const editCategory = async (req, res) => {
 
     await Category.findByIdAndUpdate(id, {
       name,
-      description
+      description,
     });
 
     return res.status(200).json({ message: "Updated" });
-
   } catch (error) {
     console.log("Edit error:", error);
     return res.status(500).json({ message: "Server error" });
@@ -79,54 +75,52 @@ const editCategory = async (req, res) => {
 };
 
 const updateCategory = async (req, res) => {
-    try {
-        const categoryId = req.params.id;
-        const newStatus = req.body.isListed; 
+  try {
+    const categoryId = req.params.id;
+    const newStatus = req.body.isListed;
 
-        const updatedCategory = await Category.findByIdAndUpdate(
-            categoryId,
-            { $set: { isListed: newStatus } }, 
-            { new: true } // return a new document
-        );
+    const updatedCategory = await Category.findByIdAndUpdate(
+      categoryId,
+      { $set: { isListed: newStatus } },
+      { new: true } // return a new document
+    );
 
-        if (!updatedCategory) {
-            return res.status(404).json({ message: 'category not found' });
-        }
-
-        res.status(200).json({ 
-            message: 'successfully changed the status.', 
-            newStatus: updatedCategory.isListed 
-        });
-
-    } catch (error) {
-        console.error('Error updating category status:', error);
-        res.status(500).json({ message: 'server error' });
+    if (!updatedCategory) {
+      return res.status(404).json({ message: "category not found" });
     }
-}
 
-const deleteCategory = async(req,res)=>{
+    res.status(200).json({
+      message: "successfully changed the status.",
+      newStatus: updatedCategory.isListed,
+    });
+  } catch (error) {
+    console.error("Error updating category status:", error);
+    res.status(500).json({ message: "server error" });
+  }
+};
+
+const deleteCategory = async (req, res) => {
   try {
     const categoryId = req.params.id;
     const deleteCategory = await Category.findByIdAndUpdate(
       categoryId,
-      {$set:{isDeleted:true}},
-      {new:true}
-    )
-    if(!deleteCategory){
-      return res.status(404).json({message: "category not found"})
+      { $set: { isDeleted: true } },
+      { new: true }
+    );
+    if (!deleteCategory) {
+      return res.status(404).json({ message: "category not found" });
     }
-    res.status(200).json({message:"category deleted"})
+    res.status(200).json({ message: "category deleted" });
   } catch (error) {
-    console.error('Error performing soft delete for category:', error);
-        res.status(500).json({ message: 'server error' });
+    console.error("Error performing soft delete for category:", error);
+    res.status(500).json({ message: "server error" });
   }
-}
+};
 
-
-module.exports={
-    loadCategory,
-    addCategory,
-    editCategory,
-    updateCategory,
-    deleteCategory,
-}
+module.exports = {
+  loadCategory,
+  addCategory,
+  editCategory,
+  updateCategory,
+  deleteCategory,
+};

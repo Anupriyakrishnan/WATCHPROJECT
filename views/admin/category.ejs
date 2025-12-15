@@ -24,7 +24,7 @@
     <div style="display:flex; justify-content: space-around;">
         <input 
             type="text" 
-            name="search"  
+            name="search" 
             class="form-control search-input" 
             placeholder="Search" 
             id="searchInput"
@@ -36,7 +36,7 @@
                             
                             <a href="#" class="btn-add" data-bs-toggle="modal"
                       data-bs-target="#addModal">
-                                <i class="fas fa-plus me-1"></i> Add Category
+                                <i class="fas fa-plus me-1"></i> Add Brand
                             </a>
                         </div>
                     </div>
@@ -94,8 +94,9 @@
                 </div>
 
                 <!-- Pagination -->
-                <nav aria-label="Page navigation" class="pt-4">
+               <nav aria-label="Page navigation" class="pt-4">
     <ul class="pagination justify-content-center">
+        
         <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
             <a class="page-link" 
                href="/admin/category?page=<%= currentPage - 1 %>&search=<%= search %>" 
@@ -103,16 +104,27 @@
                 <span aria-hidden="true">«</span>
             </a>
         </li>
-        
-        <% for (let i = 1; i <= 1; i++) { %>
+
+        <% 
+        const maxVisible = 5; 
+        let listStart = currentPage - Math.floor(maxVisible / 2);
+        listStart = Math.max(1, listStart);
+        let listEnd = listStart + maxVisible - 1;
+        if (listEnd > totalPages) {
+            listEnd = totalPages;
+            listStart = Math.max(1, totalPages - maxVisible + 1);
+        }
+        %>
+
+        <% for (let i = listStart; i <= listEnd; i++) { %>
             <li class="page-item <%= i === currentPage ? 'active' : '' %>">
                 <a class="page-link" 
                    href="/admin/category?page=<%= i %>&search=<%= search %>">
-                   <%= i %>
+                    <%= i %>
                 </a>
             </li>
         <% } %>
-        
+
         <li class="page-item <%= currentPage === totalPages || totalPages === 0 ? 'disabled' : '' %>">
             <a class="page-link" 
                href="/admin/category?page=<%= currentPage + 1 %>&search=<%= search %>" 
@@ -252,13 +264,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script>
-        // Clear search input
-        // Clear search input
 document.getElementById("clearBtn").addEventListener("click", function () {
-    // ഇൻപുട്ട് ബോക്സ് ക്ലിയർ ചെയ്യുന്നു
-    document.getElementById("searchInput").value = "";
+    document.getElementById("searchInput").value = "";
     
-    // '/admin/category' പേജിലേക്ക് റീഡയറക്ട് ചെയ്യുന്നു. (Query-യിൽ search= ഉണ്ടാവില്ല)
     window.location.href = "/admin/category";
 });
        
