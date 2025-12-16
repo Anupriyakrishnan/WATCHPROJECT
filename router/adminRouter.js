@@ -1,10 +1,13 @@
 const express = require("express");
+const upload = require('../helpers/multer');
+
 const router = express.Router();
 const { userAuth, adminAuth } = require("../middlewares/auth");
 const adminController = require("../controller/admin/adminController");
 const userController = require("../controller/admin/userController");
 const categoryController = require("../controller/admin/categoryController");
 const brandController = require("../controller/admin/brandController")
+const productController = require("../controller/admin/productController")
 
 router.get("/login", adminController.loadLogin);
 router.post("/login", adminController.login);
@@ -33,5 +36,9 @@ router.post("/add-brand",brandController.addBrand);
 router.put("/edit-brand/:id",brandController.editBrand);
 router.patch("/brand/:id/status",brandController.updateBrand)
 router.patch("/brand/:id/delete",brandController.deleteBrand)
+
+//product router
+router.get("/addproduct",productController.loadProduct);
+router.post('/product/add-product', upload.array('productImages', 4), productController.addProduct);
 
 module.exports = router;
