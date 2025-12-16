@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const multer = require("multer")
+const sharp = require("sharp")
 const path = require("path");
 const dotenv = require("dotenv");
 const session = require("express-session")

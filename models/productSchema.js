@@ -12,19 +12,21 @@ const productSchema = new Schema(
       required: true,
     },
     brand: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Brand",
       required: true,
     },
     category: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
     regularPrice: {
       type: Number,
-      required: true,
+      required: false,
     },
     salePrice: {
-      type: String,
+      type: Number,
       required: true,
     },
     productOffer: {
@@ -33,17 +35,21 @@ const productSchema = new Schema(
     },
     quantity: {
       type: Number,
-      default: true,
+      default: 0,
     },
     color: {
       type: String,
-      required: true,
+      required: false,
     },
-    productImage: {
+    productImages: {
       type: [String],
-      default: false,
+      default: true,
     },
-    isBlocked: {
+    isListed: {
+      type: Boolean,
+      default: true,
+    },
+    isDeleted: {
       type: Boolean,
       default: false,
     },

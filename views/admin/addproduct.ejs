@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <%-include("../partials/admin/header")%>
+            <!-- Main Content -->
+             <div class="col-md-9 col-lg-10 main-content">
+                <div class="row main-header">
+                    <div class="col-md-6">
+                        <h2>Products</h2>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <form class="search-container me-4" id="searchForm" action="/admin/product" method="GET">
+                                <div style="display:flex; justify-content: space-around;">
+                                    <input 
+                                        type="text" 
+                                        name="search"  
+                                        class="form-control search-input" 
+                                        placeholder="Search" 
+                                        id="searchInput"
+                                        value="<%= search %>"
+                                    >
+                            
+                                    <button type="submit" class="btn btn-primary ms-2">Search</button>
+                            
+                                    <button type="button" class="btn btn-secondary ms-2" id="clearBtn">Clear</button> 
+                                </div>
+                            </form>
+                            
+                            <a href="#" class="btn-add" id="openAddmodal" data-bs-toggle="modal"
+                      data-bs-target="#addProductModal">
+                                <i class="fas fa-plus me-1"></i> Add Product
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-body p-0">
+                        <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Image</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Sale Price</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>List/Unlist</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+                            <tbody>
+                                <% for (let i = 0; i < product.length; i++) { %>
+                                <tr>
+                                    <td><strong><%= product[i].productName %></strong></td>
+                                    <td>
+    <img 
+        src="/uploads/product-images/<%= product[i].productImages?.[0] || 'placeholder.jpg' %>" 
+        height="25em" 
+        alt=""
+    >
+</td>
+                                    <td><%= product[i].brand?.name || 'Unknown Brand' %></td>
+                                    <td><%= product[i].category?.name || 'Unknown Category' %></td>
+                                    <td><%= product[i].salePrice %></td>
+                                    <td><%= product[i].quantity %></td>
+                                    <td>
+                                        <span class="badge <%= product[i].isListed ? 'bg-success' : 'bg-danger' %>">
+                                          <%= product[i].isListed ? 'Listed' : 'Unlisted' %>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button 
+                            class="btn btn-sm <%= product[i].isListed ? 'btn-warning' : 'btn-success' %> toggle-status" 
+                            data-product-id="<%= product[i]._id %>"
+                            data-current-status="<%= product[i].isListed %>">
+                            <%= product[i].isListed ? 'Unlist' : 'List' %>
+                        </button>
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="#" class="btn-edit me-2" data-bs-toggle="modal"
+         data-bs-target="#editModal" data-id="<%= product[i]._id %>" data-name="<%= product[i].name %>"
+         data-description="<%= product[i].description %>">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="btn-delete delete-btn" data-product-id="<%= product[i]._id %>">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Add Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="productForm" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="productName" class="form-label required-label">Product Name</label>
+                                <input type="text" class="form-control" id="productName" name="productName" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="brand" class="form-label required-label">Brand</label>
+                                <select class="form-select" id="brand" name="brand" required>
+                                     <% for(let i=0; i<brand.length; i++) { %>
+                  <option value="<%= brand[i].name %>">
+                    <%= brand[i].name %>
+                  </option>
+                  <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="category" class="form-label required-label">Category</label>
+                                <select class="form-select" id="category" name="category" required>
+                                   <% for(let i=0; i<cat.length; i++) { %>
+                  <option value="<%= cat[i].name %>">
+                    <%= cat[i].name %>
+                  </option>
+                  <% } %>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="salePrice" class="form-label required-label">Sale Price</label>
+                                <input type="number" class="form-control" id="salePrice" name="salePrice" step="0.01" min="0" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="quantity" class="form-label required-label">Quantity</label>
+                                <input type="number" class="form-control" id="quantity" name="quantity" min="0" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label required-label">Product Images (Upload up to 4 images)</label>
+                            <div class="image-upload-container" id="imageContainer">
+                                <div class="image-upload-box" data-index="0">
+                                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                    <p class="mb-0 text-muted">Click to upload image 1</p>
+                                    <input type="file" class="d-none image-input" accept="image/*" data-index="0">
+                                </div>
+                                <div class="image-upload-box" data-index="1">
+                                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                    <p class="mb-0 text-muted">Click to upload image 2</p>
+                                    <input type="file" class="d-none image-input" accept="image/*" data-index="1">
+                                </div>
+                                <div class="image-upload-box" data-index="2">
+                                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                    <p class="mb-0 text-muted">Click to upload image 3</p>
+                                    <input type="file" class="d-none image-input" accept="image/*" data-index="2">
+                                </div>
+                                <div class="image-upload-box" data-index="3">
+                                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                    <p class="mb-0 text-muted">Click to upload image 4</p>
+                                    <input type="file" class="d-none image-input" accept="image/*" data-index="3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                                <label for="Description" class="form-label required-label">Description</label>
+                                <input type="text" class="form-control" id="description" name="description" required>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Crop Modal -->
+    <div class="modal fade crop-modal" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cropModalLabel">Crop Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="crop-container">
+                        <img id="cropImage" src="" alt="Image to crop">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="cropBtn">Crop & Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+                 <!-- Pagination -->
+                <nav aria-label="Page navigation" class="pt-4">
+    <ul class="pagination justify-content-center">
+        
+        <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+            <a class="page-link" 
+               href="/admin/product?page=<%= currentPage - 1 %>&search=<%= search %>" 
+               aria-label="Previous">
+                <span aria-hidden="true">«</span>
+            </a>
+        </li>
+
+        <%
+        const maxVisible = 5;
+        let listStart = currentPage - Math.floor(maxVisible / 2);
+        listStart = Math.max(1, listStart);
+        let listEnd = listStart + maxVisible - 1;
+        if (listEnd > totalPages) {
+            listEnd = totalPages;
+            listStart = Math.max(1, totalPages - maxVisible + 1);
+        }
+        %>
+
+        <% for (let i = listStart; i <= listEnd; i++) { %>
+            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                <a class="page-link" 
+                   href="/admin/product?page=<%= i %>&search=<%= search %>">
+                    <%= i %>
+                </a>
+            </li>
+        <% } %>
+
+        <li class="page-item <%= currentPage === totalPages || totalPages === 0 ? 'disabled' : '' %>">
+            <a class="page-link" 
+               href="/admin/product?page=<%= currentPage + 1 %>&search=<%= search %>" 
+               aria-label="Next">
+                <span aria-hidden="true">»</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+ <script>
+                               //search     
+                              document.getElementById("clearBtn").addEventListener("click", function () {
+                                document.getElementById("searchInput").value = "";
+                                document.getElementById("searchForm").submit();
+                              });
+
+    // 1. Image Upload and Cropper Initialization
+    let cropper; 
+    let currentImageIndex; 
+    const imageContainer = document.getElementById('imageContainer');
+    const cropImage = document.getElementById('cropImage');
+    const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
+    const productForm = document.getElementById('productForm');
+    let imageFiles = []; 
+
+   
+    imageContainer.addEventListener('click', function(e) {
+        let box = e.target.closest('.image-upload-box');
+        if (box) {
+            currentImageIndex = parseInt(box.dataset.index);
+            let input = box.querySelector('.image-input');
+            if (input) {
+                input.click(); 
+            }
+        }
+    });
+
+const cropModalElement = document.getElementById('cropModal'); // Modal element 
+
+
+document.querySelectorAll('.image-input').forEach(input => {
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            cropImage.src = event.target.result; 
+            cropModal.show(); 
+        };
+        reader.readAsDataURL(file);
+    });
+});
+
+cropModalElement.addEventListener('shown.bs.modal', function () {
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+    
+    cropper = new Cropper(cropImage, {
+        aspectRatio: 1, 
+        viewMode: 1, 
+        responsive: true,
+        background: false,
+    });
+});
+
+cropModalElement.addEventListener('hidden.bs.modal', function () {
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+});
+    // 2. Crop Button Click Logic
+
+    document.getElementById('cropBtn').addEventListener('click', function() {
+        if (!cropper) return;
+        cropper.getCroppedCanvas().toBlob((blob) => {
+            const croppedFile = new File([blob], `product-image-${currentImageIndex}.jpeg`, {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+            });
+
+            imageFiles[currentImageIndex] = croppedFile; 
+            const box = document.querySelector(`.image-upload-box[data-index="${currentImageIndex}"]`);
+            box.style.backgroundImage = `url(${URL.createObjectURL(croppedFile)})`;
+            box.style.backgroundSize = 'cover';
+            box.style.backgroundPosition = 'center';
+            box.querySelector('.upload-icon').style.display = 'none';
+            box.querySelector('p').textContent = `Image ${currentImageIndex + 1} Ready`;
+
+            cropModal.hide(); 
+            cropper.destroy(); 
+        }, 'image/jpeg', 0.9); 
+    });
+    // 3. Form Submission Logic 
+  productForm.addEventListener('submit', function(e) {
+    e.preventDefault(); 
+
+    const formData = new FormData(this); 
+    imageFiles.forEach((file, index) => {
+        if (file) {
+            formData.append('productImages', file);
+        }
+    });
+
+    fetch('/admin/product/add-product', {
+        method: 'POST',
+        body: formData, 
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                throw new Error(errorData.message || `Server responded with status: ${response.status}`);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+         if (data.success) {
+            alert(data.message || 'Product added successfully!');
+            window.location.reload(); 
+        } else {
+            alert('Error adding product: ' + (data.message || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+         console.error('Submission error:', error);
+         alert('An error occurred during submission: ' + error.message);
+    });
+});
+                            </script>
+</body>
+</html>

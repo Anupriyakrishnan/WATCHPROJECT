@@ -264,11 +264,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script>
-document.getElementById("clearBtn").addEventListener("click", function () {
-    document.getElementById("searchInput").value = "";
-    
-    window.location.href = "/admin/category";
-});
+ //search     
+                              document.getElementById("clearBtn").addEventListener("click", function () {
+                                document.getElementById("searchInput").value = "";
+                                document.getElementById("searchForm").submit();
+                              });
        
 //addmodal
         $("#saveCategory").click(function () {
